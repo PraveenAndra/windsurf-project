@@ -1,0 +1,388 @@
+{% extends 'base.html' %}
+
+{% block title %}Resume Analysis Results{% endblock %}
+
+{% block extra_css %}
+<style>
+    .keyword-pill {
+        display: inline-block;
+        background-color: rgba(74, 45, 189, 0.1);
+        color: #4a2dbd;
+        border-radius: 20px;
+        padding: 4px 12px;
+        margin: 3px;
+        font-size: 14px;
+    }
+    .keyword-pill.matched {
+        background-color: rgba(40, 167, 69, 0.1);
+        color: #28a745;
+        border: 1px solid rgba(40, 167, 69, 0.3);
+    }
+    .keyword-pill.missing {
+        background-color: rgba(220, 53, 69, 0.1);
+        color: #dc3545;
+        border: 1px solid rgba(220, 53, 69, 0.3);
+    }
+    .resume-content {
+        white-space: pre-wrap;
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+        line-height: 1.5;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        max-height: 500px;
+        overflow-y: auto;
+    }
+    .suggestion-item {
+        padding: 8px 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .suggestion-item:last-child {
+        border-bottom: none;
+    }
+    .nav-pills .nav-link {
+        color: #495057;
+    }
+    .nav-pills .nav-link.active {
+        background-color: #4a2dbd;
+        color: white;
+    }
+    .improvement-badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 600;
+    }
+    .improvement-positive {
+        background-color: rgba(40, 167, 69, 0.1);
+        color: #28a745;
+    }
+    .improvement-negative {
+        background-color: rgba(220, 53, 69, 0.1);
+        color: #dc3545;
+    }
+    .improvement-neutral {
+        background-color: rgba(255, 193, 7, 0.1);
+        color: #ffc107;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-9">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">Resume Optimization Results</h4>
+                <div>
+                    {% if latex_filename %}
+                    <a href="/download/{{ latex_filename }}" class="btn btn-outline-primary btn-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                        </svg>
+                        Download LaTeX
+                    </a>
+                    {% endif %}
+                    
+                    {% if overleaf_url %}
+                    <a href="{{ overleaf_url }}" target="_blank" class="btn btn-success btn-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+                            <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+                        </svg>
+                        Open in Overleaf
+                    </a>
+                    {% endif %}
+                    
+                    {% if overleaf_error %}
+                    <span class="text-danger">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle" viewBox="0 0 16 16">
+                            <path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/>
+                            <path d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z"/>
+                        </svg>
+                        {{ overleaf_error }}
+                    </span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-body">
+                <!-- Overall Score Comparison -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h5>Original ATS Score</h5>
+                                <h2 class="mb-3">{{ "%.1f"|format(original_analysis.overall_score * 100) }}%</h2>
+                                <div class="score-indicator">
+                                    <div class="score-bar {% if original_analysis.overall_score < 0.5 %}score-low{% elif original_analysis.overall_score < 0.7 %}score-medium{% else %}score-high{% endif %}" 
+                                        style="width: {{ original_analysis.overall_score * 100 }}%;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h5>Optimized ATS Score</h5>
+                                <h2 class="mb-3">{{ "%.1f"|format(optimized_analysis.overall_score * 100) }}%</h2>
+                                <div class="score-indicator">
+                                    <div class="score-bar {% if optimized_analysis.overall_score < 0.5 %}score-low{% elif optimized_analysis.overall_score < 0.7 %}score-medium{% else %}score-high{% endif %}" 
+                                        style="width: {{ optimized_analysis.overall_score * 100 }}%;">
+                                    </div>
+                                </div>
+                                {% set improvement = (optimized_analysis.overall_score - original_analysis.overall_score) * 100 %}
+                                <span class="improvement-badge 
+                                    {% if improvement > 0 %}improvement-positive{% elif improvement < 0 %}improvement-negative{% else %}improvement-neutral{% endif %}">
+                                    {{ "%.1f"|format(improvement) }}% improvement
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Tabs -->
+                <ul class="nav nav-pills mb-3" id="contentTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="comparison-tab" data-bs-toggle="pill" data-bs-target="#comparison" type="button" role="tab">Before/After</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="keywords-tab" data-bs-toggle="pill" data-bs-target="#keywords" type="button" role="tab">Keyword Analysis</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="suggestions-tab" data-bs-toggle="pill" data-bs-target="#suggestions" type="button" role="tab">Improvement Suggestions</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="job-tab" data-bs-toggle="pill" data-bs-target="#job" type="button" role="tab">Job Description</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="contentTabsContent">
+                    <!-- Before/After Tab -->
+                    <div class="tab-pane fade show active" id="comparison" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>Original Resume</h5>
+                                <div class="resume-content">{{ resume_content }}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Optimized Resume</h5>
+                                <div class="resume-content">{{ optimized_content }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Keywords Tab -->
+                    <div class="tab-pane fade" id="keywords" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-12 mb-4">
+                                <h5>Extracted Keywords from Job Description</h5>
+                                <div class="keywords-container p-3 border rounded">
+                                    {% for keyword in keywords %}
+                                        <span class="keyword-pill">{{ keyword }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12">
+                                <h5>Keyword Analysis</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Metric</th>
+                                                <th>Original</th>
+                                                <th>Optimized</th>
+                                                <th>Change</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% if original_analysis.keyword_analysis and optimized_analysis.keyword_analysis %}
+                                                <tr>
+                                                    <td>Keyword Match Ratio</td>
+                                                    <td>{{ "%.1f"|format(original_analysis.keyword_analysis.keyword_match_ratio * 100) }}%</td>
+                                                    <td>{{ "%.1f"|format(optimized_analysis.keyword_analysis.keyword_match_ratio * 100) }}%</td>
+                                                    <td>
+                                                        {% set change = (optimized_analysis.keyword_analysis.keyword_match_ratio - original_analysis.keyword_analysis.keyword_match_ratio) * 100 %}
+                                                        <span class="badge {% if change > 0 %}bg-success{% elif change < 0 %}bg-danger{% else %}bg-secondary{% endif %}">
+                                                            {{ "%.1f"|format(change) }}%
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Weighted Match Score</td>
+                                                    <td>{{ "%.1f"|format(original_analysis.keyword_analysis.weighted_match * 100) }}%</td>
+                                                    <td>{{ "%.1f"|format(optimized_analysis.keyword_analysis.weighted_match * 100) }}%</td>
+                                                    <td>
+                                                        {% set change = (optimized_analysis.keyword_analysis.weighted_match - original_analysis.keyword_analysis.weighted_match) * 100 %}
+                                                        <span class="badge {% if change > 0 %}bg-success{% elif change < 0 %}bg-danger{% else %}bg-secondary{% endif %}">
+                                                            {{ "%.1f"|format(change) }}%
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="4" class="text-center">Keyword analysis not available</td>
+                                                </tr>
+                                            {% endif %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Suggestions Tab -->
+                    <div class="tab-pane fade" id="suggestions" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>Original Resume Suggestions</h5>
+                                <div class="list-group">
+                                    {% if original_analysis.improvement_suggestions %}
+                                        {% for suggestion in original_analysis.improvement_suggestions %}
+                                            <div class="suggestion-item">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#dc3545" class="bi bi-exclamation-circle me-2" viewBox="0 0 16 16">
+                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                                    <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+                                                </svg>
+                                                {{ suggestion }}
+                                            </div>
+                                        {% endfor %}
+                                    {% else %}
+                                        <p class="text-muted">No suggestions found.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Remaining Suggestions</h5>
+                                <div class="list-group">
+                                    {% if optimized_analysis.improvement_suggestions %}
+                                        {% for suggestion in optimized_analysis.improvement_suggestions %}
+                                            <div class="suggestion-item">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#ffc107" class="bi bi-info-circle me-2" viewBox="0 0 16 16">
+                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                                    <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                                                </svg>
+                                                {{ suggestion }}
+                                            </div>
+                                        {% endfor %}
+                                    {% else %}
+                                        <p class="text-success">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle me-2" viewBox="0 0 16 16">
+                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                                <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                                            </svg>
+                                            No further suggestions! Your resume is well-optimized.
+                                        </p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Job Description Tab -->
+                    <div class="tab-pane fade" id="job" role="tabpanel">
+                        <h5>Job Description</h5>
+                        <div class="resume-content">{{ job_description }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">ATS Compatibility</h5>
+            </div>
+            <div class="card-body">
+                <!-- Detailed Scores -->
+                <h6>Readability</h6>
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <small>Original</small>
+                    <small>{{ "%.1f"|format(original_analysis.readability.score * 100) }}%</small>
+                </div>
+                <div class="score-indicator mb-2">
+                    <div class="score-bar" style="width: {{ original_analysis.readability.score * 100 }}%;"></div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <small>Optimized</small>
+                    <small>{{ "%.1f"|format(optimized_analysis.readability.score * 100) }}%</small>
+                </div>
+                <div class="score-indicator mb-3">
+                    <div class="score-bar" style="width: {{ optimized_analysis.readability.score * 100 }}%;"></div>
+                </div>
+
+                <h6>Formatting</h6>
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <small>Original</small>
+                    <small>{{ "%.1f"|format(original_analysis.formatting.score * 100) }}%</small>
+                </div>
+                <div class="score-indicator mb-2">
+                    <div class="score-bar" style="width: {{ original_analysis.formatting.score * 100 }}%;"></div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <small>Optimized</small>
+                    <small>{{ "%.1f"|format(optimized_analysis.formatting.score * 100) }}%</small>
+                </div>
+                <div class="score-indicator mb-3">
+                    <div class="score-bar" style="width: {{ optimized_analysis.formatting.score * 100 }}%;"></div>
+                </div>
+
+                <h6>Content Quality</h6>
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <small>Original</small>
+                    <small>{{ "%.1f"|format(original_analysis.content_analysis.content_score * 100) }}%</small>
+                </div>
+                <div class="score-indicator mb-2">
+                    <div class="score-bar" style="width: {{ original_analysis.content_analysis.content_score * 100 }}%;"></div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <small>Optimized</small>
+                    <small>{{ "%.1f"|format(optimized_analysis.content_analysis.content_score * 100) }}%</small>
+                </div>
+                <div class="score-indicator mb-3">
+                    <div class="score-bar" style="width: {{ optimized_analysis.content_analysis.content_score * 100 }}%;"></div>
+                </div>
+
+                <!-- Next Steps -->
+                <div class="mt-4">
+                    <h6>Next Steps</h6>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download me-2" viewBox="0 0 16 16">
+                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                            </svg>
+                            Download the LaTeX file
+                        </li>
+                        <li class="list-group-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right me-2" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+                                <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+                            </svg>
+                            Edit in Overleaf
+                        </li>
+                        <li class="list-group-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square me-2" viewBox="0 0 16 16">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                            </svg>
+                            Make final edits
+                        </li>
+                        <li class="list-group-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send me-2" viewBox="0 0 16 16">
+                                <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
+                            </svg>
+                            Submit your optimized resume
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

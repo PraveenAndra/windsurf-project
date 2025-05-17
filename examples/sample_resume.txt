@@ -1,0 +1,72 @@
+JOHN SMITH
+johnsmith@email.com | (555) 123-4567 | San Francisco, CA
+
+PROFESSIONAL SUMMARY
+Data Scientist with 6 years of experience developing and implementing machine learning solutions. Skilled in Python programming, statistical analysis, and data visualization. Proven track record of delivering impactful AI projects for enterprise clients.
+
+WORK EXPERIENCE
+
+Data Scientist
+DataTech Solutions, San Francisco, CA
+January 2020 - Present
+• Developed predictive models that increased customer retention by 18%
+• Created automated data pipelines using Python and SQL
+• Collaborated with product teams to implement AI features
+• Presented findings to executive stakeholders
+• Managed a team of junior data scientists
+
+Machine Learning Engineer
+AI Innovations, Oakland, CA
+March 2017 - December 2019
+• Built and deployed recommendation systems using collaborative filtering
+• Optimized data processing workflows using Spark
+• Implemented computer vision algorithms for image classification
+• Reduced model training time by 40% through infrastructure improvements
+• Mentored interns and new hires
+
+Data Analyst
+Tech Analytics Inc., San Jose, CA
+June 2015 - February 2017
+• Analyzed user behavior data to identify trends and insights
+• Created interactive dashboards using Tableau
+• Developed SQL queries for data extraction and manipulation
+• Automated reporting processes saving 10 hours per week
+
+EDUCATION
+
+Master of Science in Computer Science
+Stanford University, Stanford, CA
+2013 - 2015
+• Specialization in Machine Learning
+• GPA: 3.8/4.0
+
+Bachelor of Science in Mathematics
+University of California, Berkeley, CA
+2009 - 2013
+• Minor in Computer Science
+• Dean's List: 6 semesters
+
+SKILLS
+• Programming: Python, R, SQL, Java
+• ML Frameworks: Scikit-learn, TensorFlow, Keras
+• Data Processing: Pandas, NumPy, Spark
+• Cloud Platforms: AWS, Google Cloud
+• Visualization: Matplotlib, Seaborn, Tableau
+• Tools: Git, Docker, Jupyter Notebooks
+
+PROJECTS
+
+Sentiment Analysis System
+• Developed NLP model to analyze customer feedback
+• Achieved 92% accuracy on sentiment classification
+• Implemented as a real-time API service
+
+Computer Vision for Retail
+• Created object detection models for store inventory management
+• Reduced manual counting time by 80%
+• Deployed solution to edge devices in-store
+
+CERTIFICATIONS
+• AWS Certified Machine Learning - Specialty
+• TensorFlow Developer Certificate
+• Coursera Deep Learning Specialization

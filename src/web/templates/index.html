@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+
+{% block title %}AI Resume Optimizer - Home{% endblock %}
+
+{% block content %}
+<div class="hero text-center">
+    <div class="container">
+        <h1 class="display-4">AI Resume Optimization Tool</h1>
+        <p class="lead">Enhance your resume to match job descriptions and improve ATS compatibility</p>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">Optimize Your Resume</h4>
+            </div>
+            <div class="card-body">
+                <form action="/optimize" method="post" enctype="multipart/form-data">
+                    <div class="mb-4">
+                        <label for="resume" class="form-label">Upload Your Resume (PDF, DOCX, or TXT)</label>
+                        <input type="file" class="form-control" id="resume" name="resume" required accept=".pdf,.docx,.txt">
+                        <div class="form-text">Your resume file (max size: 8MB)</div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Job Description</label>
+                        <ul class="nav nav-tabs" id="jobDescriptionTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="paste-tab" data-bs-toggle="tab" data-bs-target="#paste-content" type="button" role="tab">Paste Text</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="upload-tab" data-bs-toggle="tab" data-bs-target="#upload-content" type="button" role="tab">Upload File</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content mt-2" id="jobDescriptionTabContent">
+                            <div class="tab-pane fade show active" id="paste-content" role="tabpanel">
+                                <textarea class="form-control" id="job_description" name="job_description" rows="8" placeholder="Paste the job description here..."></textarea>
+                            </div>
+                            <div class="tab-pane fade" id="upload-content" role="tabpanel">
+                                <input type="file" class="form-control" id="job_description_file" name="job_description_file" accept=".pdf,.docx,.txt">
+                                <div class="form-text">Upload a job description file (PDF, DOCX, or TXT)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="template" class="form-label">LaTeX Template</label>
+                        <select class="form-select" id="template" name="template">
+                            {% for template in templates %}
+                            <option value="{{ template }}">{{ template|capitalize }}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="form-text">Select the LaTeX template for your optimized resume</div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="upload_to_overleaf" name="upload_to_overleaf" checked>
+                            <label class="form-check-label" for="upload_to_overleaf">
+                                Upload to Overleaf
+                            </label>
+                        </div>
+                        <div id="overleaf_options" class="mt-2">
+                            <label for="project_name" class="form-label">Overleaf Project Name</label>
+                            <input type="text" class="form-control" id="project_name" name="project_name" placeholder="Optimized Resume">
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg">Optimize Resume</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h4 class="mb-0">How It Works</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3 text-center">
+                        <div class="p-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#4a2dbd" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+                                <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+                                <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+                            </svg>
+                            <h5 class="mt-3">Upload Resume</h5>
+                            <p class="text-muted">Upload your existing resume in PDF, DOCX, or TXT format</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3 text-center">
+                        <div class="p-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#4a2dbd" class="bi bi-magic" viewBox="0 0 16 16">
+                                <path d="M9.5 2.672a.5.5 0 1 0 1 0V.843a.5.5 0 0 0-1 0v1.829Zm4.5.035A.5.5 0 0 0 13.293 2L12 3.293a.5.5 0 1 0 .707.707L14 2.707a.5.5 0 0 0-.5-.5ZM7.293 4A.5.5 0 1 0 8 3.293L6.707 2A.5.5 0 0 0 6 2.707L7.293 4Zm-.621 2.5a.5.5 0 1 0 0-1H4.843a.5.5 0 1 0 0 1h1.829Zm8.485 0a.5.5 0 1 0 0-1h-1.829a.5.5 0 0 0 0 1h1.829ZM13.293 10A.5.5 0 1 0 14 9.293L12.707 8a.5.5 0 1 0-.707.707L13.293 10ZM9.5 11.157a.5.5 0 0 0 1 0V9.328a.5.5 0 0 0-1 0v1.829Zm1.854-5.097a.5.5 0 0 0 0-.706l-.708-.708a.5.5 0 0 0-.707 0L8.646 5.94a.5.5 0 0 0 0 .707l.708.708a.5.5 0 0 0 .707 0l1.293-1.293Zm-3 3a.5.5 0 0 0 0-.706l-.708-.708a.5.5 0 0 0-.707 0L.646 13.94a.5.5 0 0 0 0 .707l.708.708a.5.5 0 0 0 .707 0L8.354 9.06Z"/>
+                            </svg>
+                            <h5 class="mt-3">AI Optimization</h5>
+                            <p class="text-muted">Our AI analyzes and optimizes your resume for ATS compatibility</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3 text-center">
+                        <div class="p-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#4a2dbd" class="bi bi-file-earmark-pdf" viewBox="0 0 16 16">
+                                <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+                                <path d="M4.603 14.087a.81.81 0 0 1-.438-.42c-.195-.388-.13-.776.08-1.102.198-.307.526-.568.897-.787a7.68 7.68 0 0 1 1.482-.645 19.697 19.697 0 0 0 1.062-2.227 7.269 7.269 0 0 1-.43-1.295c-.086-.4-.119-.796-.046-1.136.075-.354.274-.672.65-.823.192-.077.4-.12.602-.077a.7.7 0 0 1 .477.365c.088.164.12.356.127.538.007.188-.012.396-.047.614-.084.51-.27 1.134-.52 1.794a10.954 10.954 0 0 0 .98 1.686 5.753 5.753 0 0 1 1.334.05c.364.066.734.195.96.465.12.144.193.32.2.518.007.192-.047.382-.138.563a1.04 1.04 0 0 1-.354.416.856.856 0 0 1-.51.138c-.331-.014-.654-.196-.933-.417a5.712 5.712 0 0 1-.911-.95 11.651 11.651 0 0 0-1.997.406 11.307 11.307 0 0 1-1.02 1.51c-.292.35-.609.656-.927.787a.793.793 0 0 1-.58.029zm1.379-1.901c-.166.076-.32.156-.459.238-.328.194-.541.383-.647.547-.094.145-.096.25-.04.361.01.022.02.036.026.044a.266.266 0 0 0 .035-.012c.137-.056.355-.235.635-.572a8.18 8.18 0 0 0 .45-.606zm1.64-1.33a12.71 12.71 0 0 1 1.01-.193 11.744 11.744 0 0 1-.51-.858 20.801 20.801 0 0 1-.5 1.05zm2.446.45c.15.163.296.3.435.41.24.19.407.253.498.256a.107.107 0 0 0 .07-.015.307.307 0 0 0 .094-.125.436.436 0 0 0 .059-.2.095.095 0 0 0-.026-.063c-.052-.062-.2-.152-.518-.209a3.876 3.876 0 0 0-.612-.053zM8.078 7.8a6.7 6.7 0 0 0 .2-.828c.031-.188.043-.343.038-.465a.613.613 0 0 0-.032-.198.517.517 0 0 0-.145.04c-.087.035-.158.106-.196.283-.04.192-.03.469.046.822.024.111.054.227.09.346z"/>
+                            </svg>
+                            <h5 class="mt-3">Professional LaTeX</h5>
+                            <p class="text-muted">Get a beautifully formatted resume in LaTeX with Overleaf integration</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle Overleaf options visibility
+        const overleafCheck = document.getElementById('upload_to_overleaf');
+        const overleafOptions = document.getElementById('overleaf_options');
+        
+        overleafCheck.addEventListener('change', function() {
+            overleafOptions.style.display = this.checked ? 'block' : 'none';
+        });
+        
+        // Handle job description input validation
+        const form = document.querySelector('form');
+        const jobDescTextarea = document.getElementById('job_description');
+        const jobDescFile = document.getElementById('job_description_file');
+        const pasteTab = document.getElementById('paste-tab');
+        const uploadTab = document.getElementById('upload-tab');
+        
+        form.addEventListener('submit', function(e) {
+            const activeTab = document.querySelector('.nav-link.active');
+            if (activeTab.id === 'paste-tab' && !jobDescTextarea.value.trim()) {
+                e.preventDefault();
+                alert('Please enter a job description');
+            } else if (activeTab.id === 'upload-tab' && !jobDescFile.files.length) {
+                e.preventDefault();
+                alert('Please upload a job description file');
+            }
+        });
+    });
+</script>
+{% endblock %}

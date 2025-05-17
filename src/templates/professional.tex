@@ -1,0 +1,154 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Professional Resume Template
+% Created for the AI Resume Optimization Tool
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[letterpaper,11pt]{article}
+
+% Package imports
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{fontawesome5}
+\usepackage{multicol}
+\usepackage{geometry}
+
+% Set page margins
+\geometry{left=0.75in,right=0.75in,top=0.75in,bottom=0.75in}
+
+% Custom section formatting
+\titleformat{\section}{\vspace{-4pt}\scshape\raggedright\large}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Custom subsection formatting
+\titleformat{\subsection}{\vspace{-2pt}\scshape\raggedright\normalsize}{}{0em}{}[\color{black}\vspace{-5pt}]
+
+% Other formatting
+\renewcommand{\labelitemii}{$\circ$}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+% Define custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{#1}
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeEducationHeading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeOrganizationHeading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newenvironment{resumeSection}[1]{
+    \vspace{-2pt}
+    \section{#1}
+    \begin{itemize}[leftmargin=*]
+}{
+    \end{itemize}
+}
+
+% Custom commands for contact information
+\newcommand{\contactInfo}[3]{
+    \centerline{\textbf{\Huge #1}}
+    \vspace{5pt}
+    \centerline{
+        \faEnvelope\space\href{mailto:#2}{#2} \space|\space
+        \faPhone\space #3
+    }
+}
+
+% Document begins
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%    CONTACT INFORMATION
+%----------------------------------------------------------------------------------------
+% Replace with dynamic content from the optimization tool
+{{CONTACT_INFO}}
+
+%----------------------------------------------------------------------------------------
+%    OBJECTIVE/SUMMARY
+%----------------------------------------------------------------------------------------
+\section{Professional Summary}
+{{PROFESSIONAL_SUMMARY}}
+
+%----------------------------------------------------------------------------------------
+%    EXPERIENCE
+%----------------------------------------------------------------------------------------
+\section{Experience}
+{{EXPERIENCE}}
+
+%----------------------------------------------------------------------------------------
+%    EDUCATION
+%----------------------------------------------------------------------------------------
+\section{Education}
+{{EDUCATION}}
+
+%----------------------------------------------------------------------------------------
+%    SKILLS
+%----------------------------------------------------------------------------------------
+\section{Skills}
+{{SKILLS}}
+
+%----------------------------------------------------------------------------------------
+%    PROJECTS
+%----------------------------------------------------------------------------------------
+\section{Projects}
+{{PROJECTS}}
+
+%----------------------------------------------------------------------------------------
+%    CERTIFICATIONS
+%----------------------------------------------------------------------------------------
+\section{Certifications}
+{{CERTIFICATIONS}}
+
+\end{document}

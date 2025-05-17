@@ -1,0 +1,48 @@
+Job Title: Senior Machine Learning Engineer
+
+Company: TechInnovate AI
+
+Location: San Francisco, CA (Remote Option Available)
+
+About Us:
+TechInnovate AI is a fast-growing startup specializing in developing cutting-edge AI solutions for enterprise clients. Our mission is to democratize artificial intelligence and make it accessible to businesses of all sizes.
+
+Job Description:
+We are seeking an experienced Machine Learning Engineer to join our dynamic team. The ideal candidate will develop, optimize, and deploy machine learning models to solve complex business problems. You will work closely with cross-functional teams to understand requirements and translate them into AI-powered solutions.
+
+Responsibilities:
+• Design and implement machine learning algorithms and systems
+• Develop data processing pipelines and feature engineering frameworks
+• Optimize existing ML models for performance and scalability
+• Deploy models to production and monitor their performance
+• Collaborate with data scientists and software engineers
+• Stay up-to-date with the latest ML research and technologies
+• Mentor junior engineers and contribute to knowledge sharing
+
+Requirements:
+• Bachelor's degree in Computer Science, Machine Learning, or related field (Master's or PhD preferred)
+• 5+ years of experience in machine learning engineering roles
+• Strong programming skills in Python and familiarity with ML frameworks (TensorFlow, PyTorch)
+• Experience with data processing technologies (Spark, Hadoop, SQL)
+• Knowledge of cloud platforms (AWS, GCP, or Azure)
+• Understanding of software development best practices (version control, CI/CD)
+• Experience with containerization technologies (Docker, Kubernetes)
+• Strong problem-solving skills and attention to detail
+• Excellent communication and teamwork abilities
+
+Nice to Have:
+• Experience with NLP and computer vision applications
+• Background in deep learning architectures
+• Contributions to open-source ML projects
+• Experience with ML Ops and automated model deployment
+• Knowledge of data privacy and security best practices
+
+Benefits:
+• Competitive salary and equity packages
+• Comprehensive health, dental, and vision insurance
+• Flexible work arrangements and unlimited PTO
+• Professional development budget
+• Home office stipend
+• 401(k) matching program
+
+TechInnovate AI is an equal opportunity employer. We celebrate diversity and are committed to creating an inclusive environment for all employees.
