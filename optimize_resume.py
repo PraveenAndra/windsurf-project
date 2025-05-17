@@ -6,7 +6,14 @@ This provides a simplified interface to the tool's functionality.
 import sys
 import os
 import argparse
+
+# Add the project root to the Python path
+project_root = os.path.dirname(os.path.abspath(__file__))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
 from src.main import main as optimizer_main
+from src.utils.env_validator import EnvValidator
 
 def parse_args():
     """Parse command line arguments with more user-friendly options."""
@@ -64,6 +71,16 @@ def parse_args():
 
 def main():
     """Run the optimizer with command-line arguments."""
+    print("\n=====================================")
+    print("  AI Resume Optimization Tool")
+    print("  Command Line Interface")
+    print("=====================================\n")
+    
+    # Validate environment variables
+    validator = EnvValidator()
+    validator.print_config_summary()
+    validator.validate_or_exit(suppress_warnings=True)
+    
     args = parse_args()
     
     # Process job description from file if needed
@@ -71,6 +88,7 @@ def main():
         if os.path.exists(args.job_description_file):
             with open(args.job_description_file, 'r') as f:
                 args.job_description = f.read()
+            print(f"Read job description from file: {args.job_description_file}")
         else:
             print(f"Error: Job description file not found: {args.job_description_file}")
             sys.exit(1)

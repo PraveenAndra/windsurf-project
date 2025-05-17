@@ -8,7 +8,8 @@ PyPDF2>=3.0.1
 python-docx>=0.8.11
 
 # Overleaf Integration
-python-overleaf>=0.1.0
+# Note: Overleaf API integration is handled directly with requests library
+# python-overleaf>=0.1.0 (removed - not available on PyPI)
 
 # NLP and Text Analysis
 spacy>=3.7.0

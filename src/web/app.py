@@ -5,11 +5,11 @@ from flask import Flask, render_template, request, redirect, url_for, flash, sen
 from werkzeug.utils import secure_filename
 from datetime import datetime
 
-from core.resume_optimizer import ResumeOptimizer
-from core.template_manager import TemplateManager
-from core.ats_analyzer import ATSAnalyzer
-from core.overleaf_connector import OverleafConnector
-from utils.file_handler import FileHandler
+from src.core.resume_optimizer import ResumeOptimizer
+from src.core.template_manager import TemplateManager
+from src.core.ats_analyzer import ATSAnalyzer
+from src.core.overleaf_connector import OverleafConnector
+from src.utils.file_handler import FileHandler
 
 # Initialize Flask app
 app = Flask(__name__)

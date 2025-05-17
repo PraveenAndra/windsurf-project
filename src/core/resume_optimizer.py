@@ -125,7 +125,7 @@ class ResumeOptimizer:
 
     def generate_latex_template(self, optimized_content: str) -> str:
         """Generate LaTeX template with optimized content."""
-        template = """
+        template = r"""
 \documentclass[letterpaper,11pt]{article}
 \usepackage{titlesec}
 \usepackage{enumitem}

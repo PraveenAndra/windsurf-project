@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  resume-optimizer:
+    build: .
+    container_name: resume-optimizer
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./.env:/app/.env
+    environment:
+      - PORT=5000
+    networks:
+      - resume-optimizer-network
+
+networks:
+  resume-optimizer-network:
+    driver: bridge

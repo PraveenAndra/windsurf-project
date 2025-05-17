@@ -1,0 +1,154 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Modern Resume Template
+% Created for the AI Resume Optimization Tool
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[letterpaper,11pt]{article}
+
+% Package imports
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{fontawesome5}
+\usepackage{multicol}
+\usepackage{geometry}
+\usepackage{xcolor}
+
+% Set page margins
+\geometry{left=0.75in,right=0.75in,top=0.75in,bottom=0.75in}
+
+% Define colors
+\definecolor{maincolor}{HTML}{2B6CB0}
+\definecolor{secondarycolor}{HTML}{4299E1}
+\definecolor{lightcolor}{HTML}{EBF4FF}
+\definecolor{darkcolor}{HTML}{2A4365}
+
+% Custom section formatting
+\titleformat{\section}{\color{maincolor}\Large\bfseries}
+    {}{0em}{}[\color{secondarycolor}\titlerule]
+\titlespacing{\section}{0pt}{12pt}{8pt}
+
+% Custom subsection formatting
+\titleformat{\subsection}{\color{darkcolor}\large\bfseries}
+    {}{0em}{}
+\titlespacing{\subsection}{0pt}{8pt}{4pt}
+
+% Other formatting
+\setlength{\tabcolsep}{0pt}
+\newcommand{\tab}[1]{\hspace{.2\textwidth}\rlap{#1}}
+\renewcommand{\labelitemii}{$\circ$}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Define custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{#1}
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{\color{darkcolor}#1} & \textcolor{maincolor}{#2} \\
+      \textit{\small\color{darkcolor}#3} & \textit{\small\color{darkcolor}#4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small\color{darkcolor}#1} & \textit{\small\color{darkcolor}#2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeEducationHeading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{\color{darkcolor}#1} & \textcolor{maincolor}{#2} \\
+      \textit{\small\color{darkcolor}#3} & \textit{\small\color{darkcolor}#4} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textbf{\color{darkcolor}#1} & \textcolor{maincolor}{#2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newenvironment{resumeSection}[1]{
+    \vspace{-2pt}
+    \section{#1}
+    \begin{itemize}[leftmargin=*]
+}{
+    \end{itemize}
+}
+
+% Custom command for contact information with modern styling
+\newcommand{\contactInfo}[3]{
+    \begin{center}
+        {\Huge\textcolor{maincolor}{\textbf{#1}}}\\
+        \vspace{5pt}
+        \textcolor{darkcolor}{
+            \faEnvelope\space\href{mailto:#2}{#2} \space|\space
+            \faPhone\space #3
+        }
+    \end{center}
+}
+
+% Document begins
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%    CONTACT INFORMATION
+%----------------------------------------------------------------------------------------
+% Replace with dynamic content from the optimization tool
+{{CONTACT_INFO}}
+
+%----------------------------------------------------------------------------------------
+%    OBJECTIVE/SUMMARY
+%----------------------------------------------------------------------------------------
+\section{Professional Summary}
+{{PROFESSIONAL_SUMMARY}}
+
+%----------------------------------------------------------------------------------------
+%    EXPERIENCE
+%----------------------------------------------------------------------------------------
+\section{Experience}
+{{EXPERIENCE}}
+
+%----------------------------------------------------------------------------------------
+%    EDUCATION
+%----------------------------------------------------------------------------------------
+\section{Education}
+{{EDUCATION}}
+
+%----------------------------------------------------------------------------------------
+%    SKILLS
+%----------------------------------------------------------------------------------------
+\section{Skills}
+{{SKILLS}}
+
+%----------------------------------------------------------------------------------------
+%    PROJECTS
+%----------------------------------------------------------------------------------------
+\section{Projects}
+{{PROJECTS}}
+
+%----------------------------------------------------------------------------------------
+%    CERTIFICATIONS
+%----------------------------------------------------------------------------------------
+\section{Certifications}
+{{CERTIFICATIONS}}
+
+\end{document}
